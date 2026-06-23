@@ -1,0 +1,502 @@
+:root {
+  color-scheme: light;
+  --ink: #1b1710;
+  --text: #40382d;
+  --muted: #756858;
+  --paper: #f1e6d1;
+  --paper-2: #fbf5e8;
+  --line: rgba(45, 36, 25, 0.16);
+  --blue: #193c63;
+  --red: #8f2f2f;
+  --gold: #b88432;
+  --night: #101925;
+  font-family: "Noto Serif SC", "Songti SC", "Source Han Serif SC", Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    linear-gradient(rgba(91, 66, 34, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91, 66, 34, 0.04) 1px, transparent 1px),
+    linear-gradient(180deg, #f8eedb, #dfc9a6);
+  background-size: 44px 44px, 44px 44px, auto;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.site-shell {
+  overflow: clip;
+}
+
+.hero {
+  min-height: 82vh;
+  display: grid;
+  align-items: end;
+  padding: clamp(1.4rem, 4vw, 4.5rem);
+  color: #fff7e8;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid rgba(45, 36, 25, 0.18);
+}
+
+.hero-copy {
+  width: min(780px, 100%);
+  padding-bottom: 5vh;
+}
+
+.overline {
+  margin: 0 0 0.7rem;
+  color: var(--gold);
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p,
+li {
+  text-wrap: pretty;
+}
+
+h1 {
+  margin: 0;
+  max-width: 9ch;
+  font-size: clamp(3.2rem, 7.2vw, 7.4rem);
+  line-height: 0.94;
+  letter-spacing: 0;
+}
+
+.hero-copy p:not(.overline) {
+  max-width: 42rem;
+  margin: 1.25rem 0 0;
+  color: rgba(255, 247, 232, 0.88);
+  font-size: clamp(1.02rem, 1.5vw, 1.28rem);
+  line-height: 1.8;
+}
+
+.hero-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.6rem;
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+}
+
+.hero-facts span,
+.place-list span {
+  border: 1px solid rgba(255, 247, 232, 0.28);
+  background: rgba(255, 247, 232, 0.1);
+  padding: 0.58rem 0.74rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.intro-panel,
+.timeline-section,
+.geography-section,
+.territory-section,
+.archive-section {
+  padding: clamp(2.4rem, 5vw, 5.4rem) min(5vw, 5rem);
+}
+
+.intro-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(300px, 1.05fr);
+  gap: clamp(1.4rem, 5vw, 4rem);
+  align-items: end;
+}
+
+.intro-panel h2,
+.section-copy h2,
+.territory-visual h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 3.6vw, 4rem);
+  line-height: 1.13;
+}
+
+.intro-panel > p,
+.section-copy p,
+.summary {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.03rem;
+  line-height: 1.9;
+}
+
+.timeline-section {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: clamp(1rem, 2.5vw, 2rem);
+  align-items: start;
+}
+
+.timeline-rail {
+  position: sticky;
+  top: 1rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.timeline-chip {
+  width: 100%;
+  min-height: 64px;
+  border: 1px solid var(--line);
+  background: rgba(251, 245, 232, 0.68);
+  color: var(--ink);
+  padding: 0.74rem 0.82rem;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.timeline-chip:hover,
+.timeline-chip:focus-visible {
+  transform: translateX(3px);
+  outline: 2px solid rgba(184, 132, 50, 0.32);
+  outline-offset: 2px;
+}
+
+.timeline-chip.active {
+  background: var(--night);
+  border-color: var(--night);
+  color: #fff7e8;
+}
+
+.timeline-chip span {
+  display: block;
+  color: var(--gold);
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.timeline-chip strong {
+  display: block;
+  margin-top: 0.24rem;
+  font-size: 1rem;
+}
+
+.period-card {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.92fr) minmax(0, 1.08fr);
+  min-height: 660px;
+  border: 1px solid var(--line);
+  background: rgba(251, 245, 232, 0.72);
+  box-shadow: 0 1.2rem 3rem rgba(41, 29, 17, 0.1);
+}
+
+figure {
+  margin: 0;
+}
+
+.period-card figure,
+.territory-map,
+.archive-grid a {
+  background: var(--night);
+}
+
+.period-card figure {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 500px;
+}
+
+.period-card img,
+.archive-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.period-card figcaption,
+.territory-map figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.82rem 0.95rem;
+  color: rgba(255, 247, 232, 0.8);
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-size: 0.8rem;
+}
+
+.period-card figcaption a,
+.territory-map figcaption a {
+  color: #f0c46a;
+  white-space: nowrap;
+}
+
+.period-body {
+  padding: clamp(1.45rem, 3vw, 3rem);
+}
+
+.period-body h2 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.9rem, 3.3vw, 3.7rem);
+  line-height: 1.1;
+}
+
+.evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.82rem;
+  margin-top: 1.65rem;
+}
+
+.evidence-grid section,
+.geo-cards article {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.26);
+  padding: 1rem;
+}
+
+.evidence-grid h3,
+.geo-cards h3 {
+  margin: 0 0 0.62rem;
+  font-size: 1.08rem;
+}
+
+.evidence-grid p,
+.evidence-grid li,
+.geo-cards p {
+  color: var(--text);
+  line-height: 1.72;
+}
+
+.evidence-grid ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.place-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.place-list span {
+  border-color: var(--line);
+  background: rgba(25, 60, 99, 0.06);
+  color: var(--blue);
+}
+
+.section-copy {
+  max-width: 820px;
+  margin-bottom: 1.55rem;
+}
+
+.geo-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+  gap: 1rem;
+}
+
+.geo-image {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.geo-cards {
+  display: grid;
+  gap: 0.82rem;
+}
+
+.geo-cards span {
+  color: var(--red);
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.territory-section {
+  background:
+    linear-gradient(rgba(255, 247, 232, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 247, 232, 0.03) 1px, transparent 1px),
+    var(--night);
+  background-size: 42px 42px, 42px 42px, auto;
+  color: #fff7e8;
+}
+
+.territory-visual {
+  display: grid;
+  align-items: end;
+  min-height: 460px;
+  padding: clamp(1.2rem, 3.5vw, 2.7rem);
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(255, 247, 232, 0.16);
+}
+
+.territory-content {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.territory-list {
+  margin: 0;
+  padding: 1.2rem 1.2rem 1.2rem 2.25rem;
+  border: 1px solid rgba(255, 247, 232, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.territory-list li {
+  padding: 0.5rem 0;
+  color: rgba(255, 247, 232, 0.84);
+  line-height: 1.72;
+}
+
+.territory-map {
+  display: grid;
+  grid-template-rows: minmax(300px, 1fr) auto;
+  border: 1px solid rgba(255, 247, 232, 0.16);
+}
+
+.territory-map img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 1rem;
+  background: #edf0eb;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.archive-grid a {
+  display: grid;
+  grid-template-rows: 155px auto auto;
+  min-height: 248px;
+  color: #fff7e8;
+  text-decoration: none;
+  border: 1px solid rgba(23, 19, 13, 0.18);
+}
+
+.archive-grid span,
+.archive-grid strong {
+  padding: 0 0.95rem;
+}
+
+.archive-grid span {
+  margin-top: 0.75rem;
+  color: var(--gold);
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.archive-grid strong {
+  padding-bottom: 0.9rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.3rem;
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+}
+
+.source-list a {
+  border: 1px solid var(--line);
+  background: rgba(251, 245, 232, 0.72);
+  padding: 0.66rem 0.82rem;
+  color: var(--blue);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+@media (max-width: 1080px) {
+  .intro-panel,
+  .timeline-section,
+  .period-card,
+  .geo-layout,
+  .territory-content {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-rail {
+    position: static;
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .timeline-chip {
+    flex: 0 0 210px;
+  }
+
+  .archive-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .hero,
+  .intro-panel,
+  .timeline-section,
+  .geography-section,
+  .territory-section,
+  .archive-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .hero {
+    min-height: 72vh;
+  }
+
+  h1 {
+    font-size: 3.2rem;
+  }
+
+  .period-card,
+  .geo-image,
+  .territory-visual {
+    min-height: auto;
+  }
+
+  .period-card figure {
+    min-height: 340px;
+  }
+
+  .evidence-grid,
+  .archive-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .period-card figcaption,
+  .territory-map figcaption {
+    display: grid;
+  }
+}

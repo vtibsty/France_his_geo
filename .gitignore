@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+
+# Local runtime files
+*.log
+*.pid
+
+# Environment and local config
+.env
+.env.*
+!.env.example
+
+# Tooling and editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Codex/local agent workspace files
+.agents/
+.codex/

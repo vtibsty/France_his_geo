@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Modern republican memory panel</title>
+  <desc id="desc">A locally drawn monument and city-night image for the modern French Republic section.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset=".55" stop-color="#17365e"/>
+      <stop offset="1" stop-color="#6d2732"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".34" r=".46">
+      <stop offset="0" stop-color="#ffd98e" stop-opacity=".9"/>
+      <stop offset=".38" stop-color="#d99056" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#sky)"/>
+  <rect width="1200" height="760" fill="url(#glow)"/>
+  <g fill="#e7cf9c">
+    <path d="M430 236h340l58 82v70H372v-70Z"/>
+    <path d="M406 388h388v178H406Z"/>
+    <path d="M350 566h500v76H350Z"/>
+    <path d="M468 420h76v146h-76Zm188 0h76v146h-76Z" fill="#0a1422"/>
+    <path d="M544 420c0-44 112-44 112 0v146H544Z" fill="#0a1422"/>
+    <rect x="440" y="270" width="320" height="34"/>
+  </g>
+  <g stroke="#ffd98e" stroke-width="4" opacity=".65">
+    <path d="M600 210V94"/>
+    <path d="M560 222 504 110"/>
+    <path d="M640 222 696 110"/>
+    <path d="M506 250 402 174"/>
+    <path d="M694 250 798 174"/>
+  </g>
+  <g fill="#101722">
+    <rect x="0" y="642" width="1200" height="118"/>
+    <rect x="86" y="596" width="52" height="46"/>
+    <rect x="998" y="584" width="72" height="58"/>
+    <rect x="176" y="612" width="112" height="30"/>
+    <rect x="890" y="616" width="82" height="26"/>
+  </g>
+  <g fill="#f5d581" opacity=".88">
+    <circle cx="118" cy="616" r="3"/>
+    <circle cx="228" cy="628" r="3"/>
+    <circle cx="930" cy="628" r="3"/>
+    <circle cx="1038" cy="604" r="3"/>
+    <circle cx="600" cy="656" r="5"/>
+  </g>
+  <text x="64" y="704" fill="#fff2d2" font-size="28" font-family="Georgia, 'Times New Roman', serif" font-weight="700">REPUBLICAN MEMORY</text>
+  <text x="64" y="735" fill="#fff2d2" font-size="18" font-family="Georgia, 'Times New Roman', serif" opacity=".78">De-colonization, Europe, overseas France.</text>
+</svg>

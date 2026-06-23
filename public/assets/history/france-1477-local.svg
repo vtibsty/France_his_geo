@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">15th century France and surrounding powers</title>
+  <desc id="desc">A locally drawn historical atlas style map panel for late 15th century France.</desc>
+  <defs>
+    <pattern id="paper" width="28" height="28" patternUnits="userSpaceOnUse">
+      <rect width="28" height="28" fill="#efe5cf"/>
+      <path d="M0 27.5H28M27.5 0V28" stroke="#d5c5a6" stroke-width="1" opacity=".45"/>
+    </pattern>
+    <filter id="ink">
+      <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="9"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 .08"/>
+      </feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" fill="url(#paper)"/>
+  <path d="M296 181 392 116 505 150 557 236 676 252 763 350 720 457 604 492 541 612 408 594 351 502 236 451 205 317Z" fill="#d9c18e" stroke="#1c2430" stroke-width="6"/>
+  <path d="M238 232 316 186 396 207 421 299 371 384 272 371 218 311Z" fill="#9eb2bf" stroke="#1c2430" stroke-width="4"/>
+  <path d="M626 174 752 153 880 232 871 350 764 342 680 255Z" fill="#b87d58" stroke="#1c2430" stroke-width="4"/>
+  <path d="M526 421 662 398 733 473 683 583 558 588 512 511Z" fill="#a96861" stroke="#1c2430" stroke-width="4"/>
+  <path d="M350 505 417 596 364 686 237 661 189 552 260 488Z" fill="#b9a06a" stroke="#1c2430" stroke-width="4"/>
+  <path d="M174 128C107 229 91 348 121 499" fill="none" stroke="#467398" stroke-width="20" opacity=".34"/>
+  <path d="M902 139c52 115 64 232 31 351" fill="none" stroke="#467398" stroke-width="18" opacity=".28"/>
+  <g fill="#1c2430" font-family="Georgia, 'Times New Roman', serif" font-weight="700">
+    <text x="445" y="348" font-size="54">FRANCE</text>
+    <text x="258" y="294" font-size="28">BRITTANY</text>
+    <text x="682" y="263" font-size="31">BURGUNDY</text>
+    <text x="564" y="520" font-size="28">PROVENCE</text>
+    <text x="247" y="588" font-size="26">AQUITAINE</text>
+  </g>
+  <g stroke="#1c2430" stroke-width="3" fill="none" stroke-dasharray="10 12">
+    <path d="M403 209C509 278 587 343 663 421"/>
+    <path d="M359 502C438 455 508 439 611 441"/>
+    <path d="M547 238C547 332 541 422 541 510"/>
+  </g>
+  <g fill="#8c2f2f">
+    <circle cx="468" cy="364" r="10"/>
+    <circle cx="318" cy="272" r="9"/>
+    <circle cx="700" cy="260" r="9"/>
+    <circle cx="594" cy="516" r="9"/>
+  </g>
+  <text x="54" y="690" fill="#1c2430" font-size="28" font-family="Georgia, 'Times New Roman', serif">Late medieval frontier logic: royal domain, duchies, river corridors.</text>
+  <rect x="34" y="34" width="1132" height="692" fill="none" stroke="#1c2430" stroke-width="3" opacity=".45" filter="url(#ink)"/>
+</svg>
