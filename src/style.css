@@ -46,6 +46,63 @@ img {
   overflow: clip;
 }
 
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  background: #efe1c6;
+  color: var(--ink);
+  animation: loader-exit 700ms ease 760ms forwards;
+}
+
+.loader-scroll {
+  width: min(64vw, 360px);
+  height: 86px;
+  border: 1px solid rgba(69, 48, 25, 0.28);
+  background: linear-gradient(90deg, #c6a46d, #fff0c9 14%, #ead6ad 50%, #fff0c9 86%, #b38b54);
+  box-shadow: 0 1rem 3rem rgba(58, 39, 18, 0.18);
+  transform-origin: left center;
+  animation: unfurl 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.loader-scroll span {
+  display: block;
+  width: 52%;
+  height: 2px;
+  margin: 42px auto 0;
+  background: rgba(70, 46, 21, 0.52);
+  box-shadow: 0 10px 0 rgba(70, 46, 21, 0.28), 0 -10px 0 rgba(70, 46, 21, 0.22);
+}
+
+.loader p {
+  margin: 0;
+  text-align: center;
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+@keyframes unfurl {
+  from {
+    transform: scaleX(0.08);
+    opacity: 0.45;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes loader-exit {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 .hero {
   min-height: 82vh;
   display: grid;
@@ -114,8 +171,13 @@ h1 {
 }
 
 .intro-panel,
+.search-panel,
+.map-lab,
 .timeline-section,
+.story-section,
+.compare-section,
 .geography-section,
+.data-section,
 .territory-section,
 .archive-section {
   padding: clamp(2.4rem, 5vw, 5.4rem) min(5vw, 5rem);
@@ -143,6 +205,254 @@ h1 {
   color: var(--text);
   font-size: 1.03rem;
   line-height: 1.9;
+}
+
+.search-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(300px, 0.8fr);
+  gap: 1rem;
+  align-items: end;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(251, 245, 232, 0.5);
+}
+
+.search-panel h2 {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.4vw, 2.5rem);
+  line-height: 1.18;
+}
+
+.search-box {
+  display: grid;
+  gap: 0.5rem;
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-weight: 800;
+}
+
+.search-box input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: rgba(255, 251, 241, 0.8);
+  color: var(--ink);
+  padding: 0.95rem 1rem;
+  font: inherit;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: rgba(184, 132, 50, 0.75);
+  box-shadow: 0 0 0 3px rgba(184, 132, 50, 0.16);
+}
+
+.search-results {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.search-results button {
+  border: 1px solid var(--line);
+  background: var(--night);
+  color: #fff7e8;
+  padding: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.search-results span {
+  display: block;
+  color: #dfb55f;
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.search-results strong {
+  display: block;
+  margin-top: 0.25rem;
+  line-height: 1.35;
+}
+
+.map-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.38fr);
+  gap: 1rem;
+}
+
+.map-stage {
+  min-height: 620px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 38% 34%, rgba(184, 132, 50, 0.2), transparent 18rem),
+    #e8dcc4;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 1rem 3rem rgba(41, 29, 17, 0.1);
+}
+
+.map-stage svg {
+  width: 100%;
+  height: 100%;
+  min-height: 620px;
+}
+
+.map-sea {
+  fill: #d7e0dc;
+}
+
+.map-grid-line {
+  fill: none;
+  stroke: rgba(25, 60, 99, 0.12);
+  stroke-width: 1;
+}
+
+.river {
+  fill: none;
+  stroke: rgba(25, 60, 99, 0.58);
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+
+.river-rhone {
+  stroke-width: 8;
+}
+
+.territory-shadow {
+  fill: rgba(20, 27, 37, 0.2);
+  transform: translate(16px, 18px);
+}
+
+.territory-shape {
+  fill: rgba(211, 177, 112, 0.76);
+  stroke: #1b2431;
+  stroke-width: 5;
+}
+
+.routes path {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 4;
+  stroke-dasharray: 12 10;
+  opacity: 0.8;
+}
+
+.castles path {
+  fill: #fff7e8;
+  stroke: #1b2431;
+  stroke-width: 2;
+}
+
+.battles path {
+  stroke: #8f2f2f;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.battles circle {
+  fill: none;
+  stroke: rgba(143, 47, 47, 0.45);
+  stroke-width: 2;
+}
+
+.hotspot-button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.hotspot-button circle {
+  fill: var(--blue);
+  stroke: #fff7e8;
+  stroke-width: 4;
+  transition: r 160ms ease, fill 160ms ease;
+}
+
+.hotspot-button circle.active {
+  r: 17;
+  fill: var(--red);
+}
+
+.hotspot-button text {
+  fill: #1b1710;
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  paint-order: stroke;
+  stroke: rgba(255, 247, 232, 0.78);
+  stroke-width: 5;
+}
+
+.map-control {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  border: 1px solid var(--line);
+  background: rgba(251, 245, 232, 0.76);
+  padding: 1rem;
+}
+
+.map-control h3,
+.hotspot-card h3,
+.chart-card h3,
+.network-card h3 {
+  margin: 0 0 0.55rem;
+  font-size: 1.35rem;
+}
+
+.map-control p,
+.hotspot-card p,
+.chart-card p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.72;
+}
+
+.time-slider {
+  display: grid;
+  gap: 0.6rem;
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-weight: 800;
+}
+
+.time-slider input,
+.comparison input {
+  accent-color: var(--red);
+}
+
+.layer-switches {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.layer-switches button {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.28);
+  color: var(--ink);
+  padding: 0.65rem 0.5rem;
+  cursor: pointer;
+}
+
+.layer-switches button.active {
+  background: var(--night);
+  color: #fff7e8;
+  border-color: var(--night);
+}
+
+.hotspot-card {
+  border: 1px solid rgba(143, 47, 47, 0.28);
+  background: rgba(143, 47, 47, 0.08);
+  padding: 1rem;
+}
+
+.hotspot-card span {
+  display: block;
+  color: var(--red);
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin-bottom: 0.35rem;
 }
 
 .timeline-section {
@@ -257,6 +567,123 @@ figure {
   line-height: 1.1;
 }
 
+.story-section {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  min-height: 560px;
+  color: #fff7e8;
+  background: var(--night);
+  isolation: isolate;
+}
+
+.story-map {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(255, 247, 232, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 247, 232, 0.04) 1px, transparent 1px),
+    url("/assets/history/france-1477-local.svg");
+  background-size: 72px 72px, 72px 72px, cover;
+  background-position: center;
+  opacity: 0.28;
+  animation: drift-map 18s linear infinite alternate;
+}
+
+.story-section article {
+  align-self: end;
+  border: 1px solid rgba(255, 247, 232, 0.18);
+  background: rgba(16, 25, 37, 0.76);
+  padding: clamp(1.1rem, 3vw, 2rem);
+  backdrop-filter: blur(3px);
+}
+
+.story-section h2 {
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.7rem, 3vw, 3.2rem);
+  line-height: 1.14;
+}
+
+.story-section p:not(.overline) {
+  margin: 0;
+  color: rgba(255, 247, 232, 0.84);
+  line-height: 1.85;
+}
+
+@keyframes drift-map {
+  from {
+    background-position: center, center, 45% 50%;
+  }
+  to {
+    background-position: 20px 18px, 18px 20px, 55% 48%;
+  }
+}
+
+.compare-section {
+  background: rgba(251, 245, 232, 0.42);
+}
+
+.comparison {
+  position: relative;
+  min-height: 420px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: var(--night);
+}
+
+.compare-pane {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-items: end;
+  padding: 1.2rem;
+}
+
+.compare-old {
+  background:
+    radial-gradient(circle at 28% 35%, rgba(143, 47, 47, 0.2), transparent 12rem),
+    url("/assets/history/france-1477-local.svg");
+  background-size: cover;
+}
+
+.compare-now {
+  clip-path: inset(0 0 0 var(--split));
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+    linear-gradient(135deg, #1f5b72, #17344b 46%, #1b2b24);
+  background-size: 34px 34px, 34px 34px, auto;
+}
+
+.compare-pane span {
+  width: fit-content;
+  background: rgba(16, 25, 37, 0.82);
+  color: #fff7e8;
+  padding: 0.65rem 0.8rem;
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-weight: 800;
+}
+
+.comparison::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--split);
+  width: 2px;
+  background: #fff7e8;
+}
+
+.comparison input {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: 1rem;
+  width: 90%;
+}
+
 .evidence-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -330,6 +757,104 @@ figure {
   font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
   font-size: 0.75rem;
   font-weight: 800;
+}
+
+.data-section {
+  border-top: 1px solid var(--line);
+}
+
+.data-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 1rem;
+}
+
+.chart-card,
+.network-card {
+  border: 1px solid var(--line);
+  background: rgba(251, 245, 232, 0.72);
+  padding: 1rem;
+}
+
+.bar-chart {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.8rem;
+  align-items: end;
+  height: 280px;
+  margin: 1rem 0;
+  padding: 1rem 1rem 2.1rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.bar-group {
+  position: relative;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: 0.22rem;
+  height: 100%;
+}
+
+.bar {
+  width: 28%;
+  min-height: 10px;
+  transition: height 260ms ease;
+}
+
+.bar.population {
+  background: var(--blue);
+}
+
+.bar.economy {
+  background: var(--red);
+}
+
+.bar-group small {
+  position: absolute;
+  bottom: -1.55rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--muted);
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-weight: 800;
+}
+
+.network-card svg {
+  width: 100%;
+  min-height: 340px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 50% 52%, rgba(184, 132, 50, 0.16), transparent 17rem),
+    rgba(255, 255, 255, 0.26);
+}
+
+.network-links line {
+  stroke: rgba(64, 56, 45, 0.34);
+  stroke-width: 1.1;
+}
+
+.network-node circle {
+  fill: var(--blue);
+  stroke: #fff7e8;
+  stroke-width: 1.5;
+}
+
+.network-node.rival circle {
+  fill: var(--red);
+}
+
+.network-node.ally circle {
+  fill: var(--gold);
+}
+
+.network-node text {
+  fill: var(--ink);
+  font-size: 4px;
+  font-weight: 800;
+  text-anchor: middle;
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
 }
 
 .territory-section {
@@ -438,9 +963,13 @@ figure {
 
 @media (max-width: 1080px) {
   .intro-panel,
+  .search-panel,
+  .map-workbench,
   .timeline-section,
   .period-card,
+  .story-section,
   .geo-layout,
+  .data-grid,
   .territory-content {
     grid-template-columns: 1fr;
   }
@@ -459,13 +988,23 @@ figure {
   .archive-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .map-stage,
+  .map-stage svg {
+    min-height: 520px;
+  }
 }
 
 @media (max-width: 640px) {
   .hero,
   .intro-panel,
+  .search-panel,
+  .map-lab,
   .timeline-section,
+  .story-section,
+  .compare-section,
   .geography-section,
+  .data-section,
   .territory-section,
   .archive-section {
     padding-left: 1rem;
@@ -490,9 +1029,20 @@ figure {
     min-height: 340px;
   }
 
+  .search-results,
   .evidence-grid,
+  .layer-switches,
   .archive-grid {
     grid-template-columns: 1fr;
+  }
+
+  .map-stage,
+  .map-stage svg {
+    min-height: 420px;
+  }
+
+  .comparison {
+    min-height: 320px;
   }
 
   .period-card figcaption,

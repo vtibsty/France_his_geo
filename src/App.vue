@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const heroImage = '/assets/generated/france-history-hero.png'
 const geographyImage = '/assets/generated/france-physical-geography.png'
@@ -144,6 +144,149 @@ const periods = [
   }
 ]
 
+const mapLayers = ref({
+  roads: true,
+  castles: true,
+  battles: true,
+  rivers: true
+})
+
+const activeHotspotId = ref('paris')
+const searchQuery = ref('')
+const comparisonValue = ref(52)
+const isLoading = ref(true)
+
+const mapFrames = [
+  {
+    id: 'gaul',
+    label: '罗马高卢',
+    territory: 'M282 168 404 104 558 142 650 244 748 284 792 424 706 568 536 632 380 576 268 448 228 288Z',
+    note: '道路与城市先于民族国家出现。'
+  },
+  {
+    id: 'franks',
+    label: '法兰克扩张',
+    territory: 'M246 150 414 80 630 126 794 236 878 384 810 548 610 646 394 614 232 482 184 290Z',
+    note: '巴黎盆地与莱茵方向同时进入政治核心。'
+  },
+  {
+    id: 'capet',
+    label: '王室领地扩张',
+    territory: 'M348 194 478 150 608 190 706 294 706 438 620 552 488 590 350 516 286 392 294 264Z',
+    note: '从巴黎周边向诺曼底、卢瓦尔与阿基坦方向推进。'
+  },
+  {
+    id: 'war',
+    label: '近代王国整合',
+    territory: 'M252 176 418 112 586 148 734 244 800 392 736 548 560 638 382 588 238 442 202 284Z',
+    note: '布列塔尼、勃艮第和南部边疆成为整合重点。'
+  },
+  {
+    id: 'ancien',
+    label: '自然边界想象',
+    territory: 'M240 154 430 100 642 136 820 262 856 430 760 590 548 660 350 596 204 444 184 268Z',
+    note: '莱茵、阿尔卑斯、比利牛斯被纳入边界想象。'
+  },
+  {
+    id: 'revolution',
+    label: '革命与帝国',
+    territory: 'M214 138 450 68 688 116 908 250 972 430 838 616 562 704 314 622 136 438 130 246Z',
+    note: '制度影响越出本土，欧洲大陆成为战争地图。'
+  },
+  {
+    id: 'third',
+    label: '殖民帝国',
+    territory: 'M246 154 430 98 642 134 828 258 872 422 764 594 548 660 340 590 200 438 184 268Z',
+    note: '本土边疆稳定与海外扩张同时发生。'
+  },
+  {
+    id: 'modern',
+    label: '现代法国',
+    territory: 'M256 154 430 104 626 140 804 260 844 418 746 586 548 650 348 592 210 438 192 270Z',
+    note: '共和国边界稳定，但海外领土让法国仍跨越全球。'
+  }
+]
+
+const hotspots = [
+  {
+    id: 'paris',
+    name: '巴黎',
+    x: 506,
+    y: 338,
+    period: '987 - 至今',
+    detail: '巴黎盆地使王权能够沿河流与道路向外整合，后来成为行政、文化与革命政治的核心。'
+  },
+  {
+    id: 'marseille',
+    name: '马赛',
+    x: 626,
+    y: 590,
+    period: '古典时代 - 至今',
+    detail: '马赛连接地中海贸易、十字军通道、北非联系与现代移民网络，是法国南部门户。'
+  },
+  {
+    id: 'verdun',
+    name: '凡尔登',
+    x: 662,
+    y: 326,
+    period: '843 / 1916',
+    detail: '凡尔登既让人想到法兰克世界分裂，也代表近现代法德边疆记忆中的战争创伤。'
+  },
+  {
+    id: 'nantes',
+    name: '南特',
+    x: 346,
+    y: 420,
+    period: '15 - 18 世纪',
+    detail: '南特既关联布列塔尼并入法国，也在大西洋殖民贸易中扮演重要港口角色。'
+  }
+]
+
+const historicalRoutes = [
+  'M310 500 C390 430 462 390 506 338 C558 278 624 236 710 214',
+  'M626 590 C580 506 546 420 506 338 C478 286 468 230 486 168',
+  'M346 420 C426 418 478 382 506 338 C544 300 596 306 662 326'
+]
+
+const castleSites = [
+  { x: 388, y: 314 },
+  { x: 438, y: 392 },
+  { x: 560, y: 278 },
+  { x: 704, y: 410 },
+  { x: 320, y: 452 }
+]
+
+const battleSites = [
+  { x: 510, y: 352, label: '巴黎' },
+  { x: 662, y: 326, label: '凡尔登' },
+  { x: 456, y: 462, label: '卢瓦尔' },
+  { x: 596, y: 516, label: '南部边疆' }
+]
+
+const dataSeries = [
+  { label: '1300', population: 17, economy: 24 },
+  { label: '1700', population: 21, economy: 38 },
+  { label: '1850', population: 36, economy: 62 },
+  { label: '1950', population: 42, economy: 78 },
+  { label: '2020', population: 67, economy: 100 }
+]
+
+const relationNodes = [
+  { name: '路易十四', x: 50, y: 50, type: 'king' },
+  { name: '西班牙王室', x: 18, y: 28, type: 'ally' },
+  { name: '哈布斯堡', x: 82, y: 30, type: 'rival' },
+  { name: '拿破仑', x: 36, y: 78, type: 'emperor' },
+  { name: '英国', x: 72, y: 78, type: 'rival' }
+]
+
+const relationLinks = [
+  [0, 1, '联姻'],
+  [0, 2, '竞争'],
+  [3, 4, '战争'],
+  [3, 2, '重组欧洲'],
+  [1, 2, '王朝政治']
+]
+
 const geoFeatures = [
   {
     name: '阿尔卑斯与比利牛斯',
@@ -185,14 +328,60 @@ const sources = [
 
 const activeId = ref(periods[0].id)
 const activePeriod = computed(() => periods.find((period) => period.id === activeId.value) ?? periods[0])
+const activeIndex = computed(() => Math.max(0, periods.findIndex((period) => period.id === activeId.value)))
+const activeMapFrame = computed(() => mapFrames[activeIndex.value] ?? mapFrames[0])
+const activeHotspot = computed(() => hotspots.find((hotspot) => hotspot.id === activeHotspotId.value) ?? hotspots[0])
+const searchResults = computed(() => {
+  const keyword = searchQuery.value.trim().toLowerCase()
+  if (!keyword) return []
+
+  return periods
+    .map((period) => {
+      const haystack = [period.range, period.nav, period.title, period.kicker, period.summary, ...period.geography, period.territory, period.overseas, ...period.places]
+        .join(' ')
+        .toLowerCase()
+      return haystack.includes(keyword) ? period : null
+    })
+    .filter(Boolean)
+})
 
 function selectPeriod(id) {
   activeId.value = id
 }
+
+function selectPeriodByIndex(index) {
+  activeId.value = periods[Number(index)]?.id ?? periods[0].id
+}
+
+function toggleLayer(layer) {
+  mapLayers.value[layer] = !mapLayers.value[layer]
+}
+
+function selectHotspot(id) {
+  activeHotspotId.value = id
+}
+
+function jumpToResult(id) {
+  selectPeriod(id)
+  searchQuery.value = ''
+}
+
+onMounted(() => {
+  window.setTimeout(() => {
+    isLoading.value = false
+  }, 680)
+})
 </script>
 
 <template>
   <main class="site-shell">
+    <div v-if="isLoading" class="loader" aria-live="polite" aria-label="页面加载中">
+      <div class="loader-scroll">
+        <span></span>
+      </div>
+      <p>正在展开历史地图</p>
+    </div>
+
     <section class="hero" :style="{ backgroundImage: `linear-gradient(90deg, rgba(8, 16, 28, .92), rgba(8, 16, 28, .52), rgba(8, 16, 28, .18)), url(${heroImage})` }">
       <div class="hero-copy">
         <p class="overline">Histoire & Geographie</p>
@@ -217,6 +406,100 @@ function selectPeriod(id) {
       <p>
         巴黎盆地让王权可以向外整合，莱茵方向制造长期边疆焦虑，阿尔卑斯与比利牛斯提供自然屏障，大西洋港口把法国拖入殖民贸易和全球竞争。历史事件在这里被放回地理现场。
       </p>
+    </section>
+
+    <section class="search-panel" aria-label="搜索历史主题">
+      <div>
+        <p class="overline">Search atlas</p>
+        <h2>输入地点、战争或时代，直接跳到相关历史阶段。</h2>
+      </div>
+      <label class="search-box">
+        <span>搜索</span>
+        <input v-model="searchQuery" type="search" placeholder="例如：百年战争、诺曼底、巴黎、殖民" />
+      </label>
+      <div v-if="searchResults.length" class="search-results">
+        <button v-for="result in searchResults" :key="result.id" type="button" @click="jumpToResult(result.id)">
+          <span>{{ result.range }}</span>
+          <strong>{{ result.title }}</strong>
+        </button>
+      </div>
+    </section>
+
+    <section class="map-lab" aria-label="交互式历史地图">
+      <div class="section-copy">
+        <p class="overline">Interactive map</p>
+        <h2>拖动时间轴，观察法国空间重心如何移动。</h2>
+        <p>
+          这张地图不是精确 GIS 边界，而是一张叙事地图：它用领土轮廓、道路、城堡、战役和河流图层，把不同阶段的空间逻辑放在同一个可操作画布里。
+        </p>
+      </div>
+
+      <div class="map-workbench">
+        <div class="map-stage">
+          <svg viewBox="0 0 1000 720" role="img" aria-label="法国历史地理交互示意地图">
+            <rect width="1000" height="720" class="map-sea" />
+            <path class="map-grid-line" d="M120 0V720M240 0V720M360 0V720M480 0V720M600 0V720M720 0V720M840 0V720M0 120H1000M0 240H1000M0 360H1000M0 480H1000M0 600H1000" />
+            <path v-if="mapLayers.rivers" class="river river-seine" d="M250 410 C340 380 430 360 506 338 C594 314 680 284 758 214" />
+            <path v-if="mapLayers.rivers" class="river river-rhone" d="M586 256 C564 358 594 462 626 590" />
+            <path class="territory-shadow" :d="activeMapFrame.territory" />
+            <path class="territory-shape" :d="activeMapFrame.territory" />
+
+            <g v-if="mapLayers.roads" class="routes">
+              <path v-for="route in historicalRoutes" :key="route" :d="route" />
+            </g>
+
+            <g v-if="mapLayers.castles" class="castles">
+              <path v-for="site in castleSites" :key="`${site.x}-${site.y}`" :transform="`translate(${site.x} ${site.y})`" d="M-11 10V-7h5v-8h12v8h5v17Z" />
+            </g>
+
+            <g v-if="mapLayers.battles" class="battles">
+              <g v-for="site in battleSites" :key="site.label" :transform="`translate(${site.x} ${site.y})`">
+                <path d="M-10 -10 10 10M10 -10 -10 10" />
+                <circle r="15" />
+              </g>
+            </g>
+
+            <g class="hotspots">
+              <g
+                v-for="hotspot in hotspots"
+                :key="hotspot.id"
+                class="hotspot-button"
+                role="button"
+                tabindex="0"
+                :aria-label="hotspot.name"
+                @click="selectHotspot(hotspot.id)"
+                @keyup.enter="selectHotspot(hotspot.id)"
+              >
+                <circle :cx="hotspot.x" :cy="hotspot.y" r="12" :class="{ active: activeHotspotId === hotspot.id }" />
+                <text :x="hotspot.x + 16" :y="hotspot.y - 14">{{ hotspot.name }}</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <aside class="map-control">
+          <div>
+            <p class="overline">{{ activeMapFrame.label }}</p>
+            <h3>{{ activePeriod.nav }}</h3>
+            <p>{{ activeMapFrame.note }}</p>
+          </div>
+          <label class="time-slider">
+            <span>{{ activePeriod.range }}</span>
+            <input :value="activeIndex" type="range" min="0" :max="periods.length - 1" step="1" @input="selectPeriodByIndex($event.target.value)" />
+          </label>
+          <div class="layer-switches" aria-label="地图图层">
+            <button type="button" :class="{ active: mapLayers.roads }" @click="toggleLayer('roads')">罗马道路</button>
+            <button type="button" :class="{ active: mapLayers.castles }" @click="toggleLayer('castles')">城堡分布</button>
+            <button type="button" :class="{ active: mapLayers.battles }" @click="toggleLayer('battles')">战役地点</button>
+            <button type="button" :class="{ active: mapLayers.rivers }" @click="toggleLayer('rivers')">河流骨架</button>
+          </div>
+          <article class="hotspot-card">
+            <span>{{ activeHotspot.period }}</span>
+            <h3>{{ activeHotspot.name }}</h3>
+            <p>{{ activeHotspot.detail }}</p>
+          </article>
+        </aside>
+      </div>
     </section>
 
     <section class="timeline-section" aria-label="法国历史地理时间线">
@@ -275,6 +558,36 @@ function selectPeriod(id) {
       </article>
     </section>
 
+    <section class="story-section" aria-label="沉浸式叙事">
+      <div class="story-map" aria-hidden="true"></div>
+      <article>
+        <p class="overline">Immersive scroll</p>
+        <h2>从巴黎盆地向外，法国的历史像一圈圈水纹扩散。</h2>
+        <p>
+          河谷先组织城市，王权随后接管道路和税收，边疆再把军事焦虑写进地图。滚动阅读时，背景地图纹理缓慢移动，模拟翻阅旧地图时视线穿过纸张纤维的感觉。
+        </p>
+      </article>
+      <article>
+        <p class="overline">Then and now</p>
+        <h2>今昔对比：城市与海岸线的记忆并不在同一张图上。</h2>
+        <p>
+          下面的滑块用“古地图色块”和“现代地理网格”做对照。它不是卫星图替代品，而是给未来接入真实古地图与现代影像预留的交互模型。
+        </p>
+      </article>
+    </section>
+
+    <section class="compare-section" aria-label="今昔对比滑块">
+      <div class="comparison" :style="{ '--split': `${comparisonValue}%` }">
+        <div class="compare-pane compare-old">
+          <span>18 世纪地图感</span>
+        </div>
+        <div class="compare-pane compare-now">
+          <span>现代地理网格</span>
+        </div>
+        <input v-model="comparisonValue" type="range" min="8" max="92" aria-label="调整今昔对比比例" />
+      </div>
+    </section>
+
     <section class="geography-section">
       <div class="section-copy">
         <p class="overline">Physical geography</p>
@@ -292,6 +605,48 @@ function selectPeriod(id) {
             <p>{{ feature.detail }}</p>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section class="data-section" aria-label="数据可视化与深度探索">
+      <div class="section-copy">
+        <p class="overline">Data room</p>
+        <h2>把地理影响转成可比较的数据与关系。</h2>
+        <p>
+          这里加入人口、经济和人物关系的轻量可视化，让学生和历史爱好者可以从图像之外继续追问：哪些地区聚集人口，哪些政治关系改变了边界？
+        </p>
+      </div>
+      <div class="data-grid">
+        <article class="chart-card">
+          <h3>人口与经济重心</h3>
+          <div class="bar-chart">
+            <div v-for="item in dataSeries" :key="item.label" class="bar-group">
+              <span class="bar population" :style="{ height: `${item.population}%` }"></span>
+              <span class="bar economy" :style="{ height: `${item.economy}%` }"></span>
+              <small>{{ item.label }}</small>
+            </div>
+          </div>
+          <p>蓝色代表人口规模，红色代表经济产出指数。数值用于叙事比较，不替代严肃统计数据。</p>
+        </article>
+        <article class="network-card">
+          <h3>人物与王朝关系</h3>
+          <svg viewBox="0 0 100 100" role="img" aria-label="人物关系图谱">
+            <g class="network-links">
+              <line
+                v-for="link in relationLinks"
+                :key="link.join('-')"
+                :x1="relationNodes[link[0]].x"
+                :y1="relationNodes[link[0]].y"
+                :x2="relationNodes[link[1]].x"
+                :y2="relationNodes[link[1]].y"
+              />
+            </g>
+            <g v-for="node in relationNodes" :key="node.name" class="network-node" :class="node.type">
+              <circle :cx="node.x" :cy="node.y" r="5.5" />
+              <text :x="node.x" :y="node.y - 8">{{ node.name }}</text>
+            </g>
+          </svg>
+        </article>
       </div>
     </section>
 
